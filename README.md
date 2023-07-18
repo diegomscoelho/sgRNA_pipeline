@@ -26,10 +26,10 @@ As an outcome, please provide the link to the git with code, documentation and r
 nextflow run diegomscoelho/ryvu_challenge help
 
 ## Basic usage:
-nextflow run diegomscoelho/ryvu_challenge --tcga_samples "TCGA-A7-A13D-01A-13R-A12P-07,TCGA-E9-A1RH-11A-34R-A169-07"
+nextflow run diegomscoelho/ryvu_challenge \
+    --tcga_samples "TCGA-A7-A13D-01A-13R-A12P-07,TCGA-E9-A1RH-11A-34R-A169-07"
 
-## This will automatically download necessary references + aligned/annotate reads in `inputs` folder and get TCGA info;
-
-## To avoid TCGA step just not use: `--tcga_samples`
+## This will automatically download necessary references + aligned/annotate reads in
+## `inputs` folder and get TCGA info; To avoid TCGA step just not use: `--tcga_samples` flag
 
 ```
