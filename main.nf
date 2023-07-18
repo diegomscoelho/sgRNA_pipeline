@@ -9,7 +9,7 @@ if (params.help) {
         S  G  R  N  A   P I P E L I N E
         ===================================
         Usage:
-            nextflow run diegomscoelho/sgRNA
+            nextflow run diegomscoelho/sgRNA_pipeline
         Options:
             --fasta FASTA,FASTQ                 'FASTA,FASTQ files inside `inputs` folder. Currently supports bgzipped file or not'
             --bwa_index DIRNAME                 'BWA index folder.'
