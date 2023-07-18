@@ -5,6 +5,7 @@
  // print usage
 if (params.help) {
     log.info """\
+        ===================================
         S  G  R  N  A   P I P E L I N E
         ===================================
         Usage:
@@ -24,6 +25,7 @@ params.bwa_index = file("$projectDir/ref/bwa/")
 params.outdir = "results"
 
 log.info """\
+    ===================================
       S  G  R  N  A   P I P E L I N E
     ===================================
     Fasta files            : ${params.fasta}
