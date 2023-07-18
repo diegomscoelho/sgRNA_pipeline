@@ -21,7 +21,7 @@ if (params.help) {
 }
 
 params.fasta = "$projectDir/inputs/*{fa,fq,fastq,fasta}"
-params.bwa_index = file("$projectDir/ref/bwa/")
+bwa_index_folder = params.bwa_index? file(params.bwa_index) : file("$projectDir/ref/bwa/")
 params.outdir = "results"
 
 log.info """\
@@ -49,10 +49,10 @@ if (!params.ref_gtf) {
 workflow {
 
     fasta = Channel.fromPath(params.fasta)
-    bwa_index = Channel.fromPath(params.bwa_index)
+    bwa_index = Channel.fromPath(bwa_index_folder)
     
     // If BWA_INDEX does not exist, automatically downloads Reference fasta and create index
-    if (!params.bwa_index.exists()) {
+    if (!bwa_index_folder.exists()) {
         ref_genome_fasta = params.ref_genome_fasta? file(params.ref_genome_fasta) : file("https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_44/GRCh38.primary_assembly.genome.fa.gz")
         bwa_index_ch = BWA_INDEX(ref_genome_fasta)
         bwa_index = bwa_index_ch.index
