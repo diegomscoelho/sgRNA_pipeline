@@ -1,6 +1,6 @@
 process BWA_ALIGN {
     label 'BWA'
-    publishDir "${params.outdir}", mode: 'copy'
+    publishDir "${params.outdir}/${fasta.baseName}", mode: 'copy'
 
     input:
     path ref_fasta

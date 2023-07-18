@@ -1,10 +1,10 @@
 process RETRIEVE_TCGA {
-    debug true
     label 'R'
-    publishDir "${params.outdir}", mode: 'copy'
+    publishDir "${params.outdir}/${name}", mode: 'copy'
 
     input:
     path gene_names
+    val name
 
     output:
     path "TCGA_retrieved.csv"

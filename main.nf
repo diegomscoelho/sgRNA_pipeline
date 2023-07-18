@@ -16,7 +16,7 @@ if (params.help) {
             --ref_genome_fasta FASTA            'FASTA used to create BWA index.'
             --ref_gtf GTF,GFF3                  'GTF/GFF3 used to get gene_name'\n
             --tcga_samples STRING               'TCGA samples comma-separated.
-                                                 Example: "TCGA-A7-A13D-01A-13R-A12P-07,TCGA-E9-A1RH-11A-34R-A169-07"'\n                
+                                                 Defautl: "TCGA-A7-A13D-01A-13R-A12P-07,TCGA-E9-A1RH-11A-34R-A169-07"'\n                
             --assay STRING                      'Options: unstranded, stranded_first, stranded_second, tpm_unstranded,
                                                  fpkm_unstranded, fpkm_uq_unstranded (Default: unstranded)'
         """
@@ -24,9 +24,9 @@ if (params.help) {
     exit 1
 }
 
-params.fasta = "$projectDir/inputs/*{fa,fq,fastq,fasta}"
+params.fasta = params.fasta? params.fasta : "$projectDir/inputs/*{fa, fq, fasta, fastq}"
 bwa_index_folder = params.bwa_index? file(params.bwa_index) : file("$projectDir/ref/bwa/")
-params.tcga_samples = "TCGA-A7-A13D-01A-13R-A12P-07,TCGA-E9-A1RH-11A-34R-A169-07"
+params.tcga_samples = params.tcga_samples? params.tcga_samples : ""
 params.assay = params.assay? params.assay : "unstranded"
 params.outdir = "results"
 
@@ -48,7 +48,7 @@ include { PARSE_GTF } from "$baseDir/modules/PARSE_GTF.nf"
 include { ASSIGN_GENES_MATCH } from "$baseDir/modules/ASSIGN_GENES_MATCH"
 include { RETRIEVE_TCGA } from "$baseDir/modules/RETRIEVE_TCGA.nf"
 
-// Get all necessary files
+// Get GTF if necessary
 
 if (!params.ref_gtf) {
     params.ref_gtf = file("https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_44/gencode.v44.basic.annotation.gtf.gz")
@@ -56,8 +56,7 @@ if (!params.ref_gtf) {
 
 workflow {
 
-    // Get fasta + BWA index
-    fasta = Channel.fromPath(params.fasta)
+    // BWA index
     bwa_index = Channel.fromPath(bwa_index_folder)
     
     // If BWA_INDEX does not exist, automatically downloads Reference fasta and create index
@@ -70,11 +69,15 @@ workflow {
     // Create info from GTF file
     parse_gtf_ch = PARSE_GTF(params.ref_gtf)
 
+    fasta_ch = Channel.fromPath(params.fasta)
+
     // Alignment + Transform Sam to Bed
-    align_ch = BWA_ALIGN(bwa_index, fasta)
+    align_ch = BWA_ALIGN(bwa_index.first(), fasta_ch)
     samtobed_ch = SAMTOBED(align_ch.sam)
     agm_ch = ASSIGN_GENES_MATCH(parse_gtf_ch.gtf, samtobed_ch.bed)
-    rTCGA_ch = RETRIEVE_TCGA(agm_ch.rds)
+    if (params.tcga_samples){
+        rTCGA_ch = RETRIEVE_TCGA(agm_ch.rds, agm_ch.name)
+    }
 
 }
 
