@@ -23,10 +23,10 @@ As an outcome, please provide the link to the git with code, documentation and r
 
 ```sh
 ## To get info just run:
-nextflow run diegomscoelho/ryvu_challenge help
+nextflow run diegomscoelho/sgRNA_pipeline -r main --help
 
 ## Basic usage:
-nextflow run diegomscoelho/ryvu_challenge \
+nextflow run diegomscoelho/sgRNA_pipeline -r main \
     --tcga_samples "TCGA-A7-A13D-01A-13R-A12P-07,TCGA-E9-A1RH-11A-34R-A169-07"
 
 ## This will automatically download necessary references + aligned/annotate reads in
