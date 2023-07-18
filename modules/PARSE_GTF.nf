@@ -1,12 +1,11 @@
 process PARSE_GTF {
     label 'R'
-    publishDir "${params.outdir}", mode: 'copy'
 
     input:
     path gtf
 
     output:
-    path "${gtf.simpleName}.rds"
+    path "${gtf.simpleName}.rds", emit: gtf
 
     script:
     template 'parse_gtf.R'

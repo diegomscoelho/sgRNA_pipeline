@@ -1,12 +1,11 @@
 process SAMTOBED {
     label 'BEDTOOLS'
-    publishDir "${params.outdir}", mode: 'copy'
 
     input:
     path sam
 
     output:
-    path "${sam.baseName}.bed"
+    path "${sam.baseName}.bed", emit: bed
 
     script:
     """

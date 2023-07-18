@@ -14,9 +14,10 @@ As an outcome, please provide the link to the git with code, documentation and r
 
 ## How-to
 
-1) Align reads to a short-reads aligner as BWA / BOWTIE; (BWA_ALIGN; BOWTIE_ALIGN)
-2) Create a csv with read_name, chr, start, end, strand, gene_name;
-3) Retrieve info from TCGA-BRCA based on sample-id and intersect with gene_name from task 2;
+1) Align reads to a short-reads aligner as BWA; (BWA_ALIGN; BWA_INDEX);
+2) Parse GTF information to get chr, start, end, strand, gene_name;
+3) Create a csv with read_name, chr, start, end, strand, gene_name;
+4) Retrieve info from TCGA-BRCA based on sample-id and intersect with gene_name from task 2;
 
 ## Usage
 
