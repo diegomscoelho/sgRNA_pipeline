@@ -29,7 +29,7 @@ nextflow run diegomscoelho/sgRNA_pipeline -r main --help
 nextflow run diegomscoelho/sgRNA_pipeline -r main \
     --tcga_samples "TCGA-A7-A13D-01A-13R-A12P-07,TCGA-E9-A1RH-11A-34R-A169-07"
 
-## This will automatically download necessary references + aligned/annotate reads in
+## This will automatically download necessary references + align/annotate reads in
 ## `inputs` folder and get TCGA info; To avoid TCGA step just not use: `--tcga_samples` flag
 
 ```
