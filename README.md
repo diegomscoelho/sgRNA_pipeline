@@ -12,7 +12,7 @@ This repository is to answer a challenge from Ryvu Therapeutics.
 Please wrap your solution in a simple nextflow pipeline; use docker for virtualization of used software and provide short documentation. 
 As an outcome, please provide the link to the git with code, documentation and results.
 
-## How-to
+## Workflow
 
 1) Align reads to a short-reads aligner as BWA and generate a BED file; (BWA_ALIGN; BWA_INDEX; BEDTOOLS);
 2) Parse GTF information to get chr, start, end, strand, gene_name (PARSE_GTF);
